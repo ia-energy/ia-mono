@@ -2,7 +2,7 @@
 One monolithic repo to rule them all. This repo will be used to house anything directly interacting with the main IA website.
 
 ## Product Overview 
-![Sequence diagram](https://github.com/ia-energy/ia-mono/master/docs/overview/Analytics_Service_sequence_diagram.png "Sequence diagram")
+![Sequence diagram](https://github.com/ia-energy/ia-mono/blob/master/docs/overview/Analytics_Service_sequence_diagram.png "Sequence diagram")
 
 ## Repo Structure
 Besides the docs directory each high level directory should represent a deployable product. There should be a README describing the product and how to develop or deploy the product. 
