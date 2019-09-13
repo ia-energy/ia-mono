@@ -1,0 +1,24 @@
+# generated at https://www.websequencediagrams.com
+title Analytics Service Software Stack
+
+
+VueJS \n MVVM Framework \n (User Browser)->Flask \n REST API Framework: Authentication Request
+
+AWS FTP->AWS S3 \n Object Store: Offline file push
+
+Airflow \n Workflow Scheduler<->AWS S3 \n Object Store: File Polling, \n Processing and Updates
+Airflow \n Workflow Scheduler<->Analysis Libs: Report Generation
+Airflow \n Workflow Scheduler->Flask \n REST API Framework: Resource persistence
+
+
+Flask \n REST API Framework<->Postgres \n DB: Authentication Verification
+Flask \n REST API Framework->VueJS \n MVVM Framework \n (User Browser): Web Token (JWTs)
+
+VueJS \n MVVM Framework \n (User Browser)->Flask \n REST API Framework: Resource Action \n  (Get, Put, Post, Delete)
+
+Flask \n REST API Framework<->Postgres \n DB: JWTs Role check
+Flask \n REST API Framework<->Postgres \n DB: Resource registration/resolution
+Flask \n REST API Framework<->AWS S3 \n Object Store: Resource persistence 
+Flask \n REST API Framework->VueJS \n MVVM Framework \n (User Browser): Resource (or error)
+VueJS \n MVVM Framework \n (User Browser)<->Flask \n REST API Framework: Polling for updates
+
