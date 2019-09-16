@@ -1,4 +1,13 @@
 from flask import Flask
+import json
+
+try:
+   with open('ia_flask.json') as config_file:
+       data = json.load(config_file)
+except FileNotFoundError:
+   with open('ia_flask_example.json') as config_file:
+       data = json.load(config_file)
+  
 app = Flask(__name__)
 
 @app.route('/')

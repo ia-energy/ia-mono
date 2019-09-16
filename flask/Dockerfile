@@ -1,5 +1,6 @@
 # base image
-FROM debian:9.11-slim
+# choosen from https://pythonspeed.com/articles/base-image-python-docker-images/
+FROM python:3.7-slim-buster
 
 # set working directory
 WORKDIR /app
