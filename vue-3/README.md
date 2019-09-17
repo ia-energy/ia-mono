@@ -4,6 +4,7 @@ Client side Javascript framework general learning:
 * JavaScript Framework [vuejs.org](https://vuejs.org)
 * CSS Framework [Bootstrap](https://getbootstrap.com/)
 * Container for dev and deploy [Docker](https://www.docker.com)
+* Authenication [Auth0](https://auth0.com)
 
 ## Dependencies
 * (Docker install) https://docs.docker.com/install/
@@ -13,6 +14,8 @@ and/or
 * (Node/NPM) https://nodejs.org/en/download/
 note: there is a HOST env issue with OSX please run `unset HOST` if server doesn't start
 
+## Configuration
+* auth_config.json - Auth0 [configuration](https://auth0.com/docs/quickstart/spa/vuejs/01-login)
 
 ## Starting
 * Docker
