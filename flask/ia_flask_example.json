@@ -1,3 +1,7 @@
 {
-   "_comment": "config file"
+   "_comment": "config file",
+   "Auth0": {
+      "domain": "dev1-ia-energy.auth0.com",
+      "audience": "https://dev1-ia-energy.auth0.com/userinfo"
+   }
 }

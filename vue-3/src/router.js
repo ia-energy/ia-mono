@@ -4,6 +4,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Callback from './components/Callback';
 import Profile from "./views/Profile.vue";
+import ExternalApiView from "./views/ExternalApi.vue";
 import auth from "./auth/authService";
 
 Vue.use(Router);
@@ -18,7 +19,12 @@ const routes = [
     path: "/profile",
     name: "profile",
     component: Profile
-  }
+  },
+  {
+      path: "/external-api",
+      name: "external-api",
+      component: ExternalApiView
+  },
 ];
 
 const router = new Router({

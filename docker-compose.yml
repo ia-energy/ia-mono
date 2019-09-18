@@ -1,0 +1,20 @@
+version: '3.3'
+services:
+    ia-vue:
+        build: './vue-3'
+        container_name: ia-vue
+        volumes:
+            - ./vue-3:/app
+            - /app/node_modules
+        ports:
+            - '8080:8080'
+        image: 'ia-vue:dev'
+    ia-flask:
+        build: './flask'
+        restart: unless-stopped
+        container_name: ia-flask
+        volumes:
+            - ./flask:/app
+        ports:
+            - '5000:5000'
+        image: 'ia-flask:dev'
