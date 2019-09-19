@@ -133,16 +133,33 @@ def up_check():
 @app.route("/api/private-scoped")
 @cross_origin(headers=["Content-Type", "Authorization"])
 @requires_auth
-def private_scoped():
-    print("here")
-   
-    response = "Hello from a private endpoint! You need to be authenticated and have a scope of read:messages to see this."
+def api_private_scoped():
+    if requires_scope("read:resources:test_org"):
+        response = "Hello from a private endpoint! You need to be authenticated and have a scope of read:messages to see this."
+        return jsonify(message=response)
+    raise AuthError({
+        "code": "Unauthorized",
+        "description": "You don't have access to this resource"
+    }, 403)
+
+# This needs authentication
+@app.route("/api/private")
+@cross_origin(headers=["Content-Type", "Authorization"])
+@requires_auth
+def api_private():
+    response = "Hello from a private endpoint! You need to be authenticated"
     return jsonify(message=response)
     raise AuthError({
         "code": "Unauthorized",
         "description": "You don't have access to this resource"
     }, 403)
 
+# This needs authentication
+@app.route("/api/public")
+@cross_origin(headers=["Content-Type", "Authorization"])
+def api_public():
+    response = "Hello from a public endpoint!"
+    return jsonify(message=response)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
