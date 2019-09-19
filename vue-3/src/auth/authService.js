@@ -10,7 +10,7 @@ const webAuth = new auth0.WebAuth({
   clientID: authConfig.clientId,
   audience: authConfig.audience,   // add the audience
   responseType: "token id_token",   // request 'token' as well as 'id_token'
-  scope: 'openid profile email'
+  scope: 'openid profile email read:private:test'
 });
 
 

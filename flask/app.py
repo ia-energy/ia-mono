@@ -116,6 +116,7 @@ def requires_scope(required_scope):
     """
     token = get_token_auth_header()
     unverified_claims = jwt.get_unverified_claims(token)
+    print(unverified_claims)
     if unverified_claims.get("scope"):
             token_scopes = unverified_claims["scope"].split()
             for token_scope in token_scopes:
@@ -134,7 +135,7 @@ def up_check():
 @cross_origin(headers=["Content-Type", "Authorization"])
 @requires_auth
 def api_private_scoped():
-    if requires_scope("read:resources:test_org"):
+    if requires_scope("read:private:test"):
         response = "Hello from a private endpoint! You need to be authenticated and have a scope of read:messages to see this."
         return jsonify(message=response)
     raise AuthError({
