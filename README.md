@@ -15,9 +15,10 @@ Besides the docs directory each high level directory should represent a deployab
 * [Vuejs.org](https://nodejs.org) JavaScript Framework 
 * [Bootstrap](https://getbootstrap.com/) CSS Framework 
 * [Postgres](https://www.postgresql.org/) SQL and non-sql database
+* [Auth0](https://auth0.com/) Authenication software as a service
 
 ## Docker compose
-Idealy the easy way of getting a development instance up and going:
+The easy way of getting a development instance up and going:
 `docker-compose up`
 
 Containers by port number
