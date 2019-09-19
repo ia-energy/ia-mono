@@ -18,3 +18,19 @@ services:
         ports:
             - '5000:5000'
         image: 'ia-flask:dev'
+    ia-postgres:
+        image: postgres:11.5
+        container_name: ia-postgres
+        ports:
+          - "5432:5432"
+        environment:
+          - POSTGRES_USER=ia
+          - POSTGRES_PASSWORD=change_for_prod
+          - POSTGRES_DB=ia
+    docker-airflow:
+        container_name: ia-airflow
+        ports:
+          - '8082:8080'
+        image: puckel/docker-airflow:1.10.4
+        environment:
+          - LOAD_EX=y

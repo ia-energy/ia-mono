@@ -15,3 +15,13 @@ Besides the docs directory each high level directory should represent a deployab
 * [Vuejs.org](https://nodejs.org) JavaScript Framework 
 * [Bootstrap](https://getbootstrap.com/) CSS Framework 
 * [Postgres](https://www.postgresql.org/) SQL and non-sql database
+
+## Docker compose
+Idealy the easy way of getting a development instance up and going:
+`docker-compose up`
+
+Containers by port number
+* 8080 VueJs
+* 5000 Flask
+* 5432 Postgres
+* 8081 Airflow
