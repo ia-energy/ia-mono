@@ -15,7 +15,7 @@ Besides the docs directory each high level directory should represent a deployab
 * [Vuejs.org](https://nodejs.org) JavaScript Framework 
 * [Bootstrap](https://getbootstrap.com/) CSS Framework 
 * [Postgres](https://www.postgresql.org/) SQL and non-sql database
-* [Auth0](https://auth0.com/) Authenication software as a service
+* [Auth0](https://auth0.com/) Authentication software as a service
 
 ## Docker compose
 The easy way of getting a development instance up and going:
