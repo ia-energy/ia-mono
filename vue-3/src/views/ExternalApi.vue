@@ -1,7 +1,7 @@
 <template>
  <div>
     <div>
-      <h1>External API</h1>
+      <h1>External API Test</h1>
       <p>Ping an external API by clicking the button below. This will call the external API using an access token, and the API will validate it using
         the API's audience value.
       </p>
