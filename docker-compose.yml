@@ -16,7 +16,7 @@ services:
         environment:
           - PYTHONUNBUFFERED=1
         volumes:
-            - ./flask:/app
+            - ./flask:/working_dir
         ports:
             - '5000:5000'
         image: 'ia-flask:dev'
