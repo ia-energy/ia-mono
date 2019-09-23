@@ -3,7 +3,7 @@ import json
 from flask import Flask, request, jsonify
 from flask_cors import cross_origin
 
-from auth0.auth_0_manager import Auth0Manager
+from app.services.auth_0_manager import Auth0Manager
 
 try:
    with open('ia_flask.json') as config_file:

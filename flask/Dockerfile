@@ -3,19 +3,19 @@
 FROM python:3.7-slim-buster
 
 # set working directory
-WORKDIR /app
+WORKDIR /working_dir
 
 
 RUN apt-get update -y && \
     apt-get install -y python-pip python-dev
 
 # We copy just the requirements.txt first to leverage Docker cache
-COPY ./requirements.txt /app/requirements.txt
+COPY ./requirements.txt /working_dir/requirements.txt
 
 RUN pip install -r requirements.txt
 
-COPY . /app
+COPY . /working_dir
 
 ENTRYPOINT [ "python" ]
 
-CMD [ "app.py" ]
+CMD [ "manage.py" ]

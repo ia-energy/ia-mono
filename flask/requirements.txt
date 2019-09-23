@@ -5,3 +5,9 @@ flask-cors==3.0.8
 pycryptodome==3.9.0 
 python-jose-cryptodome==1.3.2
 six==1.12.0
+flask-bcrypt
+flask-restplus
+pyjwt
+Flask-Script
+flask_testing
+Flask-Migrate
