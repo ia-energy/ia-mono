@@ -6,7 +6,8 @@ pycryptodome==3.9.0
 python-jose-cryptodome==1.3.2
 six==1.12.0
 flask-bcrypt
-flask-restplus
+# flask-restplus issue with error handling see: https://github.com/noirbizarre/flask-restplus/issues/693
+flask-restplus==0.12.1
 pyjwt
 Flask-Script
 flask_testing
