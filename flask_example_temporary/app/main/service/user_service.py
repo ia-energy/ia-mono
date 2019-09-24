@@ -10,10 +10,9 @@ def save_new_user(data):
     if not user:
         new_user = User(
             public_id=str(uuid.uuid4()),
-            email=data['email'],
-            username=data['username'],
-            password=data['password'],
-            registered_on=datetime.datetime.utcnow()
+            value=data['email'],
+            created=datetime.datetime.utcnow()
+            updated=datetime.datetime.utcnow()
         )
         save_changes(new_user)
         response_object = {

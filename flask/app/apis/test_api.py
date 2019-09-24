@@ -10,16 +10,17 @@ def handle_auth_error(ex):
    return ex.error, ex.status_code
 
 
-test = api.model('Test', {
-    'id': fields.String(required=True, description='Test message identifier'),
+test = api.model('TestMessage', {
+    'public_id': fields.String(required=True, description='Test message identifier'),
     'value': fields.String(required=True, description='Message'),
+    'created': fields.String(required=True, description='created timestamp'),
+    'updated': fields.String(required=True, description='updated timestamp'),
 })
 
 TEST = [
     {'id': '1', 'value': 'message1'},
     {'id': '2', 'value': 'message2'},
     {'id': '3', 'value': 'message3'},
-
 ]
 
 @api.route('/auth_access/')

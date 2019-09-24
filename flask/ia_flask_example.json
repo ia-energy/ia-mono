@@ -4,5 +4,9 @@
       "domain": "dev1-ia-energy.auth0.com",
       "audience": "https://dev1-ia-energy.auth0.com/userinfo",
       "algorithms": "RS256"
+   },
+   "app": {
+      "sqlAlchemyDatabaseUri":"postgresql://ia:change_for_prod@localhost/ia",
+      "debug":true
    }
 }
