@@ -18,4 +18,4 @@ COPY . /working_dir
 
 ENTRYPOINT [ "python" ]
 
-CMD [ "manage.py" ]
+CMD [ "manage.py", "run"]

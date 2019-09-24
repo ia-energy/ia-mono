@@ -7,6 +7,9 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 
+# DB model imports
+from app.model import test_message
+
 from app.apis import api
 from app.apis import blueprint as api1
 from app.config import ia_config as config
@@ -30,7 +33,7 @@ manager.add_command('db', MigrateCommand)
 
 @manager.command
 def run():
-   app.run()
+   app.run(debug=True, host='0.0.0.0')
 
 @manager.command
 def test():
