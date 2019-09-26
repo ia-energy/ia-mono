@@ -12,5 +12,5 @@
 
 Commands
 * You shouldn't need this one if directory /migrations exsit.`python manage.py db init`
-* Find changes in models `python manage.py db migrate
+* Find changes in models `python manage.py db migrate`
 * Upgrade the db schema to latest models `python manage.py db upgrade`
