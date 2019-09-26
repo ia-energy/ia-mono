@@ -2,13 +2,9 @@ import unittest
 
 from flask import Flask
 from flask_cors import CORS
-#from app.controllers.test_controller import test_endpoints
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
-
-# DB model imports
-from app.model import test_message
 
 from app.apis import api
 from app.apis import blueprint as api1
@@ -22,13 +18,13 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = config['app']['sqlAlchemyDatabaseUri']
 app.register_blueprint(api1)
 app.app_context().push()
-db = SQLAlchemy()
-db.init_app(app)
-
 manager = Manager(app)
 
+db = SQLAlchemy()
+db.init_app(app)
+# DB model imports
+from app.model.test_message import *
 migrate = Migrate(app, db)
-
 manager.add_command('db', MigrateCommand)
 
 @manager.command

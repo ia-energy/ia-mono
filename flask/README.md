@@ -6,3 +6,11 @@
 
 ## Running test 
 * `python manage.py test`
+
+## Database change management
+[Flask migrate](https://flask-migrate.readthedocs.io/en/latest/) is being used.
+
+Commands
+* You shouldn't need this one if directory /migrations exsit.`python manage.py db init`
+* Find changes in models `python manage.py db migrate
+* Upgrade the db schema to latest models `python manage.py db upgrade`
