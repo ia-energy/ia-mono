@@ -1,4 +1,7 @@
+import '@babel/polyfill'
+import 'mutationobserver-shim'
 import Vue from 'vue'
+import './plugins/bootstrap-vue'
 import AuthPlugin from "./plugins/auth";
 import App from './App.vue'
 import 'bootstrap'

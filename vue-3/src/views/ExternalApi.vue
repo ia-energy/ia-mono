@@ -15,7 +15,7 @@
       <p>{{ apiMessage }}</p>
     </div>
 
-    <div v-for="(message) in messages" >
+    <div v-for="message in messages"  v-bind:key="message.id">
        {{ message.value }}
     </div>
 

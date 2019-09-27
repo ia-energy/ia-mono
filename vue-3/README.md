@@ -2,6 +2,7 @@
 Client side Javascript framework general learning:
 
 * JavaScript Framework [vuejs.org](https://vuejs.org)
+* JavaScript Framework [bootstrap-vue.js.or](https://bootstrap-vue.js.org/docs)
 * CSS Framework [Bootstrap](https://getbootstrap.com/)
 * Container for dev and deploy [Docker](https://www.docker.com)
 * Authenication [Auth0](https://auth0.com)
