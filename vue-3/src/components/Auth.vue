@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     login() {
-      this.$auth.login();
+      this.$auth.login({ target: this.$route.query.page });
     },
     logout() {
       this.$auth.logOut();
