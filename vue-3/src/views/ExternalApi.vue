@@ -63,7 +63,7 @@ export default {
           }
         });
         this.apiMessage = 'Got 200 with data';
-        this.messages = data.message;
+        this.messages = data;
         console.log(data);
       } catch (e) {
         this.apiMessage = `Error: the server responded with '${ e.response.status }: ${e.response.statusText}'`; }
