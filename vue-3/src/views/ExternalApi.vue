@@ -48,10 +48,11 @@ export default {
       try {
         const { data } = await axios.get("/api/1/test/auth_access/", {});
         this.apiMessage = 'Got 200 with data';
-        this.messages = data.message;
+        this.messages = data;
         console.log(data);
       } catch (e) {
         this.apiMessage = `Error: the server responded with '${ e.response.status }: ${e.response.statusText}'`; }
+        this.messages = null;
     },
     async callPrivateWAuth() {
       const accessToken = await this.$auth.getAccessToken();

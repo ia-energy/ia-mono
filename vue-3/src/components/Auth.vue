@@ -1,30 +1,31 @@
 <template>
   <div>
-    <nav>
-      <div>
-        <a href="#">Auth0 - Vue</a>
-      </div>
+    <b-navbar toggleable="lg" type="dark" variant="info">
+      <b-navbar-brand href="#">IA.energy</b-navbar-brand>
+      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
-      <ul>
-        <li>
-          <router-link to="/">Home</router-link>
-        </li>
-        <li v-if="!isAuthenticated">
-          <a href="#" @click.prevent="login">Login</a>
-        </li>
-        <li v-if="isAuthenticated">
-            <router-link to="/profile">Profile</router-link>
-        </li>
-        <li v-if="isAuthenticated">
-          <a href="#" @click.prevent="logout">Log out</a>
-        </li>
-      </ul>
-  </nav>
+      <b-collapse id="nav-collapse" is-nav>
+         <b-navbar-nav>
+            <b-nav-item :to="{ path: '/' }">Home</b-nav-item>
+            <b-nav-item :to="{ path: '/external-api' }">External API</b-nav-item>
+         </b-navbar-nav>
 
+         <b-navbar-nav class="ml-auto">
+            <b-nav-item-dropdown text="User" right>
+               <b-dropdown-item :to="{ path: '/' }">Home</b-dropdown-item>
+               <b-dropdown-item href="#" v-if="!isAuthenticated" @click.prevent="login">Login</b-dropdown-item>
+               <b-dropdown-item v-if="isAuthenticated" :to="{ path: '/profile' }">Profile</b-dropdown-item>
+               <b-dropdown-item href="#" v-if="isAuthenticated" @click.prevent="logout">Log out</b-dropdown-item>
+            </b-nav-item-dropdown>
+         </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
     <div>
       <router-view></router-view>
     </div>
   </div>
+
+
 </template>
 
 <script>
