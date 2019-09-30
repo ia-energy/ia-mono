@@ -2,6 +2,13 @@
  <div>
     <div>
       <h1>External API Test</h1>
+
+      <div v-if="apiMessage">
+        <h2>Result</h2>
+        <p>{{ apiMessage }}</p>
+      </div>
+
+      <h2>Get test</h2>
       <p>Ping an external API by clicking the button below. This will call the external API using an access token, and the API will validate it using
         the API's audience value.
       </p>
@@ -10,15 +17,12 @@
       <button @click="callPrivateWAuth">Get private list w/o required auth_access</button>
     </div>
 
-    <div v-if="apiMessage">
-      <h2>Result</h2>
-      <p>{{ apiMessage }}</p>
-    </div>
-
     <div v-for="message in messages"  v-bind:key="message.id">
        {{ message.value }}
     </div>
-
+    <h2> Post test </h2>
+    <b-form-input v-model="message" placeholder="Enter your name"></b-form-input>
+    <button @click="callPostMessage">Post Message</button>
  </div>
 </template>
 
@@ -30,7 +34,8 @@ export default {
   data() {
     return {
       apiMessage: null,
-      messages: null
+      messages: null,
+      postMessage: null
     };
   },
   methods: {
@@ -65,6 +70,24 @@ export default {
         });
         this.apiMessage = 'Got 200 with data';
         this.messages = data;
+        console.log(data);
+      } catch (e) {
+        this.apiMessage = `Error: the server responded with '${ e.response.status }: ${e.response.statusText}'`; }
+    },
+    async callPostMessage() {
+      const accessToken = await this.$auth.getAccessToken();
+      const json = { value: this.message }
+
+      try {
+        const { data } =  await axios.post("/api/1/test/auth_access/",
+        json,
+         {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        });
+        this.apiMessage = 'Got 200 with data';
+        this.postMessage = data;
         console.log(data);
       } catch (e) {
         this.apiMessage = `Error: the server responded with '${ e.response.status }: ${e.response.statusText}'`; }

@@ -11,10 +11,10 @@ def handle_auth_error(ex):
 
 
 test = api.model('TestMessage', {
-    'public_id': fields.String(required=True, description='Test message identifier'),
+    'id': fields.String(required=False, description='Test message identifier'),
     'value': fields.String(required=True, description='Message'),
-    'created': fields.String(required=True, description='created timestamp'),
-    'updated': fields.String(required=True, description='updated timestamp'),
+    'created': fields.String(required=False, description='created timestamp'),
+    'updated': fields.String(required=False, description='updated timestamp'),
 })
 
 TEST = [
@@ -32,6 +32,15 @@ class TestList(Resource):
         '''List all test'''
         return TEST
 
+    @api.doc('post_test')
+    @api.marshal_with(test)
+    @requires_auth
+    def post(self):
+        '''Post a test message'''
+        content = request.json
+        return content
+
+
 @api.route('/auth_access/<id>')
 @api.param('id', 'The message identifier')
 @api.response(404, 'Test not found')
@@ -45,6 +54,7 @@ class Test(Resource):
             if test['id'] == id:
                 return test
         api.abort(404)
+
 
 @api.route('/no_auth_access/')
 class TestList(Resource):
