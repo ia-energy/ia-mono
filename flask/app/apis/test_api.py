@@ -1,5 +1,7 @@
 from flask_restplus import Namespace, Resource, fields
 from app.services.auth_0_manager import *
+from app.services import test_message_db_srvc as db_srvc
+
 
 api = Namespace('test', description='test api')
 
@@ -22,6 +24,7 @@ TEST = [
     {'id': '2', 'value': 'message2'},
     {'id': '3', 'value': 'message3'},
 ]
+
 
 @api.route('/auth_access/')
 class TestList(Resource):

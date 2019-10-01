@@ -2,28 +2,27 @@ import unittest
 
 from flask import Flask
 from flask_cors import CORS
-from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 
+from app import db
+from app.config import ia_config as config
 from app.apis import api
 from app.apis import blueprint as api1
-from app.config import ia_config as config
 
 app = Flask(__name__)
 # https://tech.zegami.com/cant-set-authorization-header-for-flask-cors-request-bd88be04fc7c
 CORS(app, expose_headers='Authorization')
+app.register_blueprint(api1)
+app.app_context().push()
 app.config['DEBUG'] = config['app']['debug']
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = config['app']['sqlAlchemyDatabaseUri']
-app.register_blueprint(api1)
-app.app_context().push()
 manager = Manager(app)
 
-db = SQLAlchemy()
 db.init_app(app)
 # DB model imports
-from app.model.test_message import *
+from app.model.test_message import TestMessage
 migrate = Migrate(app, db)
 manager.add_command('db', MigrateCommand)
 

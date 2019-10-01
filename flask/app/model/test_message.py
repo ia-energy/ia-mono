@@ -1,4 +1,4 @@
-from manage import db
+from app import db
 
 class TestMessage(db.Model):
     """ User Model for storing user related details """

@@ -1,17 +1,15 @@
 import uuid
 import datetime
-
-from app.main import db
-from app.main.apis.test_apis import TestMessage
-
+from app import db
+from app.model.test_message import TestMessage
 
 def save_new_msg(data):
-    mgs = TestMessage.query.filter_by(public_id=data['public_id']).first()
+    mgs = TestMessage.query.filter_by(public_id=data['id']).first()
     if not msg:
         new_mgs = TestMessage(
-            public_id=str(uuid.uuid4()),  
+            public_id=str(uuid.uuid4()),
             value=data['value'],
-            created=datetime.datetime.utcnow()
+            created=datetime.datetime.utcnow(),
             updated=datetime.datetime.utcnow()
         )
         save_changes(new_msg)
@@ -23,17 +21,17 @@ def save_new_msg(data):
     else:
         response_object = {
            'status': 'fail',
-           'message': 'Msg already exists. Please Log in.',
+           'message': 'Msg already exists.',
         }
     return response_object, 409
 
 
 def get_all_messages():
-    return TestMessage.query.all()
+    return test.query.all()
 
 
 def get_a_message(public_id):
-    return TestMessage.query.filter_by(public_id=public_id).first()
+    return test.query.filter_by(public_id=public_id).first()
 
 
 def save_changes(data):
