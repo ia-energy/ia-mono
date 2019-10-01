@@ -6,6 +6,12 @@
       <div v-if="apiMessage">
         <h2>Result</h2>
         <p>{{ apiMessage }}</p>
+        <div v-for="message in messages" v-if="messages" v-bind:key="message.id">
+           {{ message.value }}
+        </div>
+        <div v-if="message">
+           {{ message.value }}
+        </div>
       </div>
 
       <h2>Get test</h2>
@@ -17,11 +23,8 @@
       <button @click="callPrivateWAuth">Get private list w/o required auth_access</button>
     </div>
 
-    <div v-for="message in messages"  v-bind:key="message.id">
-       {{ message.value }}
-    </div>
     <h2> Post test </h2>
-    <b-form-input v-model="message" placeholder="Enter your name"></b-form-input>
+    <b-form-input v-model="message.value" placeholder="Enter test value"></b-form-input>
     <button @click="callPostMessage">Post Message</button>
  </div>
 </template>
@@ -35,7 +38,7 @@ export default {
     return {
       apiMessage: null,
       messages: null,
-      postMessage: null
+      message: {value:'test' + (new Date()).getTime()},
     };
   },
   methods: {
@@ -76,7 +79,7 @@ export default {
     },
     async callPostMessage() {
       const accessToken = await this.$auth.getAccessToken();
-      const json = { value: this.message }
+      const json = this.message
 
       try {
         const { data } =  await axios.post("/api/1/test/auth_access/",
@@ -87,7 +90,7 @@ export default {
           }
         });
         this.apiMessage = 'Got 200 with data';
-        this.postMessage = data;
+        this.message =  data;
         console.log(data);
       } catch (e) {
         this.apiMessage = `Error: the server responded with '${ e.response.status }: ${e.response.statusText}'`; }
