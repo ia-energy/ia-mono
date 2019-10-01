@@ -6,7 +6,7 @@
       "algorithms": "RS256"
    },
    "app": {
-      "sqlAlchemyDatabaseUri":"postgresql://ia:change_for_prod@localhost/ia",
+      "sqlAlchemyDatabaseUri":"postgresql://ia:change_for_prod@ia-postgres/ia",
       "debug":true
    }
 }

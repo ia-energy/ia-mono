@@ -4,9 +4,9 @@ from app import db
 from app.model.test_message import TestMessage
 
 def save_new_msg(data):
-    mgs = TestMessage.query.filter_by(public_id=data['id']).first()
+    msg = TestMessage.query.filter_by(public_id=data['id']).first()
     if not msg:
-        new_mgs = TestMessage(
+        new_msg = TestMessage(
             public_id=str(uuid.uuid4()),
             value=data['value'],
             created=datetime.datetime.utcnow(),

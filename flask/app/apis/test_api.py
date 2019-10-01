@@ -41,6 +41,7 @@ class TestList(Resource):
     def post(self):
         '''Post a test message'''
         content = request.json
+        db_srvc.save_new_msg(content)
         return content
 
 
