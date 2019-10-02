@@ -8,20 +8,19 @@
         <p>{{ apiMessage }}</p>
 
         <!-- fix below: https://www.thetechieshouse.com/vue-js-pagination-example-with-bootstrap-server-side-pagination/ -->
-        <b-pagination @click="callPrivateWAuth"
-            v-model="pageList.currentPage"
-            :total-rows="pageList.total"
-            :per-page="pageList.perPage"
+        <b-pagination
+            @input="getMessages(msgPage)"
+            v-model="msgPage"
+            :total-rows="msgTotal"
+            :per-page="msgPerPage"
             aria-controls="my-table">
         </b-pagination>
 
-        <p class="mt-3">Current Page: {{ pageList.currentPage }}</p>
+        <p class="mt-3">Current Page: {{ msgPage }}</p>
 
         <b-table
             id="my-table"
-            :items="pageList.items"
-            :per-page="pageList.perPage"
-            :current-page="pageList.page"
+            :items="msgItems"
             small>
         </b-table>
 
@@ -34,18 +33,18 @@
       <p>Ping an external API by clicking the button below. This will call the external API using an access token, and the API will validate it using
         the API's audience value.
       </p>
-      <button @click="callPrivateList">Get private list w/o required auth_access</button>
-      <button @click="callPrivateWAuth">Get private list required auth_access</button>
+      <button @click="getNoAuth">Get private list w/o required auth_access</button>
+      <button @click="getMessages">Get private list required auth_access</button>
     </div>
 
     <h2> Post test </h2>
     <b-form-input v-model="message.value" placeholder="Enter test value"></b-form-input>
-    <button @click="callPostMessage">Post Message</button>
+    <button @click="postMessage">Post Message</button>
 
     <div v-if="message.uuid">
        <h2>Put test </h2>
        <b-form-input v-model="message.value" placeholder="Enter test value"></b-form-input>
-       <button @click="callPutMessage">Post Message</button>
+       <button @click="putMessage">Post Message</button>
     </div>
 
  </div>
@@ -59,12 +58,15 @@ export default {
   data() {
     return {
       apiMessage: null,
-      pageList: {'page':1},
+      msgPage: 1,
+      msgPerPage: 2,
+      msgItems: null,
+      msgTotal: null,
       message: {uuid:'', value:'test' + (new Date()).getTime()},
     };
   },
   methods: {
-    async callPrivateList() {
+    async getNoAuth() {
       try {
         const { data } = await axios.get("/api/1/test_messages/", {});
         this.apiMessage = 'Got 200 with data';
@@ -74,22 +76,23 @@ export default {
         this.apiMessage = `Error: the server responded with '${ e.response.status }: ${e.response.statusText}'`; }
         this.messages = null;
     },
-    async callPrivateWAuth() {
+    async getMessages(page) {
       const accessToken = await this.$auth.getAccessToken();
 
       try {
-        const { data } = await axios.get("/api/1/test_messages/?perPage=2&page="+this.pageList.page, {
+        const { data } = await axios.get("/api/1/test_messages/?perPage=" + this.msgPerPage + "&page=" + this.msgPage, {
           headers: {
             Authorization: `Bearer ${accessToken}`
           }
         });
         this.apiMessage = 'Got 200 with data';
-        this.pageList = data;
+        this.msgItems = data.items;
+        this.msgTotal = data.total
         console.log(data);
       } catch (e) {
         this.apiMessage = `Error: the server responded with '${ e.response.status }: ${e.response.statusText}'`; }
     },
-    async callPostMessage() {
+    async postMessage() {
       const accessToken = await this.$auth.getAccessToken();
       const json = this.message
 
@@ -107,7 +110,7 @@ export default {
       } catch (e) {
         this.apiMessage = `Error: the server responded with '${ e.response.status }: ${e.response.statusText}'`; }
     },
-    async callPutMessage() {
+    async putMessage() {
       const accessToken = await this.$auth.getAccessToken();
       const json = this.message
 
@@ -125,6 +128,9 @@ export default {
       } catch (e) {
         this.apiMessage = `Error: the server responded with '${ e.response.status }: ${e.response.statusText}'`; }
     }
+  },
+  mounted(msgPage){
+    this.getMessages(msgPage)
   }
 };
 </script>
