@@ -6,8 +6,10 @@
       <div v-if="apiMessage">
         <h2>Result</h2>
         <p>{{ apiMessage }}</p>
-        <div v-for="message in messages" v-if="messages" v-bind:key="message.id">
-           {{ message.value }}
+        <div v-if="messages">
+           <div v-for="message in messages" v-bind:key="message.public_id">
+              {{ message.value }}
+           </div>
         </div>
         <div v-if="message">
            {{ message.value }}
@@ -26,6 +28,13 @@
     <h2> Post test </h2>
     <b-form-input v-model="message.value" placeholder="Enter test value"></b-form-input>
     <button @click="callPostMessage">Post Message</button>
+
+    <div v-if="message.public_id">
+       <h2>Put test </h2>
+       <b-form-input v-model="message.value" placeholder="Enter test value"></b-form-input>
+       <button @click="callPutMessage">Post Message</button>
+    </div>
+
  </div>
 </template>
 
@@ -38,7 +47,7 @@ export default {
     return {
       apiMessage: null,
       messages: null,
-      message: {value:'test' + (new Date()).getTime()},
+      message: {public_id:'', value:'test' + (new Date()).getTime()},
     };
   },
   methods: {
@@ -83,6 +92,24 @@ export default {
 
       try {
         const { data } =  await axios.post("/api/1/test/auth_access/",
+        json,
+         {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        });
+        this.apiMessage = 'Got 200 with data';
+        this.message =  data;
+        console.log(data);
+      } catch (e) {
+        this.apiMessage = `Error: the server responded with '${ e.response.status }: ${e.response.statusText}'`; }
+    },
+    async callPutMessage() {
+      const accessToken = await this.$auth.getAccessToken();
+      const json = this.message
+
+      try {
+        const { data } =  await axios.put("/api/1/test/auth_access/"+json['public_id'],
         json,
          {
           headers: {
