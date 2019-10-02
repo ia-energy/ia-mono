@@ -2,6 +2,7 @@ import uuid
 import datetime
 from app import db
 from app.model.test_message import TestMessage
+from sqlalchemy.sql import func
 
 def save_new_msg(data):
     print(data)
@@ -21,14 +22,23 @@ def update_msg(data):
         return None, 204
     else:
         msg.value = data['value']
+        msg.updated = func.now()
         commit()
     return msg, 200
 
-def get_all_messages():
-    return test.query.all()
+def get_messages(page,per_page):
+    pag = TestMessage.query.paginate(page=page, per_page=per_page, error_out=True, max_per_page=1000)
+    return {
+      'page' : pag.page,
+      'pages' : pag.pages,
+      'perPage' : pag.per_page,
+      'total' : pag.total,
+      'items' : pag.items
+    }, 200
 
 def get_a_message(uuid):
-    return test.query.filter_by(uuid=uuid).first()
+    print(TestMessage.query.filter_by(uuid=uuid).first())
+    return TestMessage.query.filter_by(uuid=uuid).first()
 
 def add(data):
     db.session.add(data)

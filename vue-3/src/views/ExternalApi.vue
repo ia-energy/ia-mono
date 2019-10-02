@@ -6,11 +6,25 @@
       <div v-if="apiMessage">
         <h2>Result</h2>
         <p>{{ apiMessage }}</p>
-        <div v-if="messages">
-           <div v-for="message in messages" v-bind:key="message.uuid">
-              {{ message.value }}
-           </div>
-        </div>
+
+        <!-- fix below: https://www.thetechieshouse.com/vue-js-pagination-example-with-bootstrap-server-side-pagination/ -->
+        <b-pagination @click="callPrivateWAuth"
+            v-model="pageList.currentPage"
+            :total-rows="pageList.total"
+            :per-page="pageList.perPage"
+            aria-controls="my-table">
+        </b-pagination>
+
+        <p class="mt-3">Current Page: {{ pageList.currentPage }}</p>
+
+        <b-table
+            id="my-table"
+            :items="pageList.items"
+            :per-page="pageList.perPage"
+            :current-page="pageList.page"
+            small>
+        </b-table>
+
         <div v-if="message">
            {{ message.value }}
         </div>
@@ -20,9 +34,8 @@
       <p>Ping an external API by clicking the button below. This will call the external API using an access token, and the API will validate it using
         the API's audience value.
       </p>
-      <button @click="callPublicList">Get public list </button>
       <button @click="callPrivateList">Get private list w/o required auth_access</button>
-      <button @click="callPrivateWAuth">Get private list w/o required auth_access</button>
+      <button @click="callPrivateWAuth">Get private list required auth_access</button>
     </div>
 
     <h2> Post test </h2>
@@ -46,26 +59,16 @@ export default {
   data() {
     return {
       apiMessage: null,
-      messages: null,
+      pageList: {'page':1},
       message: {uuid:'', value:'test' + (new Date()).getTime()},
     };
   },
   methods: {
-    async callPublicList() {
-
-      try {
-        const { data } = await axios.get("/api/1/test/no_auth_access/", {});
-        this.apiMessage = 'Got 200 with data';
-        this.messages = data
-        console.log(data);
-      } catch (e) {
-        this.apiMessage = `Error: the server responded with '${ e.response.status }: ${e.response.statusText}'`; }
-    },
     async callPrivateList() {
       try {
-        const { data } = await axios.get("/api/1/test/auth_access/", {});
+        const { data } = await axios.get("/api/1/test_messages/", {});
         this.apiMessage = 'Got 200 with data';
-        this.messages = data;
+        this.pageList = data;
         console.log(data);
       } catch (e) {
         this.apiMessage = `Error: the server responded with '${ e.response.status }: ${e.response.statusText}'`; }
@@ -75,13 +78,13 @@ export default {
       const accessToken = await this.$auth.getAccessToken();
 
       try {
-        const { data } = await axios.get("/api/1/test/auth_access/", {
+        const { data } = await axios.get("/api/1/test_messages/?perPage=2&page="+this.pageList.page, {
           headers: {
             Authorization: `Bearer ${accessToken}`
           }
         });
         this.apiMessage = 'Got 200 with data';
-        this.messages = data;
+        this.pageList = data;
         console.log(data);
       } catch (e) {
         this.apiMessage = `Error: the server responded with '${ e.response.status }: ${e.response.statusText}'`; }
@@ -91,7 +94,7 @@ export default {
       const json = this.message
 
       try {
-        const { data } =  await axios.post("/api/1/test/auth_access/",
+        const { data } =  await axios.post("/api/1/test_messages/",
         json,
          {
           headers: {
@@ -109,7 +112,7 @@ export default {
       const json = this.message
 
       try {
-        const { data } =  await axios.put("/api/1/test/auth_access/"+json['uuid'],
+        const { data } =  await axios.put("/api/1/test_messages/"+json['uuid'],
         json,
          {
           headers: {
