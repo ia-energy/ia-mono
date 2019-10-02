@@ -25,7 +25,8 @@ develop or deploy the product.
 
 ## Docker compose
 The easy way of getting a development instance up and going:
-`docker-compose up`
+* `docker-compose up`
+* see [/flask/README.md](/flask#database-change-management) for datebase setup
 
 Containers by port number
 * 8080 VueJs
