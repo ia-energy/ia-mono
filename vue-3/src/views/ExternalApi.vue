@@ -7,7 +7,7 @@
         <h2>Result</h2>
         <p>{{ apiMessage }}</p>
         <div v-if="messages">
-           <div v-for="message in messages" v-bind:key="message.public_id">
+           <div v-for="message in messages" v-bind:key="message.uuid">
               {{ message.value }}
            </div>
         </div>
@@ -29,7 +29,7 @@
     <b-form-input v-model="message.value" placeholder="Enter test value"></b-form-input>
     <button @click="callPostMessage">Post Message</button>
 
-    <div v-if="message.public_id">
+    <div v-if="message.uuid">
        <h2>Put test </h2>
        <b-form-input v-model="message.value" placeholder="Enter test value"></b-form-input>
        <button @click="callPutMessage">Post Message</button>
@@ -47,7 +47,7 @@ export default {
     return {
       apiMessage: null,
       messages: null,
-      message: {public_id:'', value:'test' + (new Date()).getTime()},
+      message: {uuid:'', value:'test' + (new Date()).getTime()},
     };
   },
   methods: {
@@ -109,7 +109,7 @@ export default {
       const json = this.message
 
       try {
-        const { data } =  await axios.put("/api/1/test/auth_access/"+json['public_id'],
+        const { data } =  await axios.put("/api/1/test/auth_access/"+json['uuid'],
         json,
          {
           headers: {

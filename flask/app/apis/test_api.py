@@ -13,33 +13,33 @@ def handle_auth_error(ex):
 
 
 test = api.model('TestMessage', {
-    'public_id': fields.String(required=False, description='Test message identifier'),
+    'uuid': fields.String(required=False, description='Test message identifier'),
     'value': fields.String(required=True, description='Message'),
     'created': fields.String(required=False, description='created timestamp'),
     'updated': fields.String(required=False, description='updated timestamp'),
 })
 
 TEST = [
-    {'public_id': '1', 'value': 'message1'},
-    {'public_id': '2', 'value': 'message2'},
-    {'public_id': '3', 'value': 'message3'},
+    {'uuid': '1', 'value': 'message1'},
+    {'uuid': '2', 'value': 'message2'},
+    {'uuid': '3', 'value': 'message3'},
 ]
 
 
-@api.route('/auth_access/', defaults={'public_id': None})
-@api.route('/auth_access/<public_id>')
+@api.route('/auth_access/', defaults={'uuid': None})
+@api.route('/auth_access/<uuid>')
 class TestList(Resource):
     @api.doc('list_test')
     @api.marshal_list_with(test)
     @requires_auth
-    def get(self, public_id):
+    def get(self, uuid):
         '''List all test'''
         return TEST
 
     @api.doc('post_test')
     @api.marshal_with(test)
     @requires_auth
-    def post(self, public_id):
+    def post(self, uuid):
         '''Post a test message'''
         content = request.json
         return db_srvc.save_new_msg(content)
@@ -47,23 +47,23 @@ class TestList(Resource):
     @api.doc('put_test')
     @api.marshal_with(test)
     @requires_auth
-    def put(self, public_id):
+    def put(self, uuid):
         '''Put a test message'''
         content = request.json
         return db_srvc.update_msg(content)
 
 
-@api.route('/auth_access/<public_id>')
-@api.param('public_id', 'The message identifier')
+@api.route('/auth_access/<uuid>')
+@api.param('uuid', 'The message identifier')
 @api.response(404, 'Test not found')
 class Test(Resource):
     @api.doc('get_test')
     @api.marshal_with(test)
     @requires_auth
-    def get(self, public_id):
+    def get(self, uuid):
         '''Fetch a test given its identifier'''
         for test in TEST:
-            if test['public_id'] == public_id:
+            if test['uuid'] == uuid:
                 return test
         api.abort(404)
 
@@ -76,15 +76,15 @@ class TestList(Resource):
         '''List all test'''
         return TEST
 
-@api.route('/no_auth_access/<public_id>')
-@api.param('public_id', 'The message identifier')
+@api.route('/no_auth_access/<uuid>')
+@api.param('uuid', 'The message identifier')
 @api.response(404, 'Test not found')
 class Test(Resource):
     @api.doc('get_test')
     @api.marshal_with(test)
-    def get(self, public_id):
+    def get(self, uuid):
         '''Fetch a test given its identifier'''
         for test in TEST:
-            if test['public_id'] == public_id:
+            if test['uuid'] == uuid:
                 return test
         api.abort(404)
