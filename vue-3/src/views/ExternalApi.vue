@@ -4,8 +4,6 @@
       <h1>External API Test</h1>
 
       <div v-if="apiMessage">
-        <h2>Result</h2>
-        <p>{{ apiMessage }}</p>
 
         <!-- fix below: https://www.thetechieshouse.com/vue-js-pagination-example-with-bootstrap-server-side-pagination/ -->
         <b-pagination
@@ -28,23 +26,37 @@
            {{ message.value }}
         </div>
       </div>
+      </div>
 
-      <h2>Get test</h2>
-      <p>Ping an external API by clicking the button below. This will call the external API using an access token, and the API will validate it using
-        the API's audience value.
-      </p>
-      <button @click="getNoAuth">Get private list w/o required auth_access</button>
-      <button @click="getMessages">Get private list required auth_access</button>
+      <hr />
+
+      <div>
+         <h2>Get test</h2>
+         <p>Ping an external API by clicking the button below. This will call the external API using an access token, and the API will validate it using
+           the API's audience value.
+           <button @click="getNoAuth">Get private list w/o required auth_access</button>
+           <button @click="getMessages">Get private list required auth_access</button>
+           <h2>Result</h2>
+           <p>{{ apiMessage }}</p>
+         </p>
+      </div>
+
+    <hr />
+
+    <div>
+       <h2> Post test </h2>
+       <b-form-input v-model="message.value" placeholder="Enter test value"></b-form-input>
+       <button @click="postMessage">Post Message</button>
+       <h2>Result</h2>
+       <p>{{ apiMessage }}</p>
     </div>
-
-    <h2> Post test </h2>
-    <b-form-input v-model="message.value" placeholder="Enter test value"></b-form-input>
-    <button @click="postMessage">Post Message</button>
 
     <div v-if="message.uuid">
        <h2>Put test </h2>
        <b-form-input v-model="message.value" placeholder="Enter test value"></b-form-input>
        <button @click="putMessage">Post Message</button>
+       <h2>Result</h2>
+       <p>{{ apiMessage }}</p>
     </div>
 
  </div>
