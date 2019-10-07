@@ -5,7 +5,7 @@ import Router from 'vue-router';
 import Callback from './components/Callback';
 import Profile from "./views/Profile.vue";
 import Index from "./views/Index.vue";
-import ExternalApiView from "./views/ExternalApi.vue";
+import AppPrototypesView from "./views/AppPrototypes.vue";
 import auth from "./auth/authService";
 
 Vue.use(Router);
@@ -27,9 +27,9 @@ const routes = [
     component: Profile
   },
   {
-      path: "/external-api",
-      name: "external-api",
-      component: ExternalApiView
+      path: "/app-prototypes",
+      name: "app-prototypes",
+      component: AppPrototypesView
   },
 ];
 
