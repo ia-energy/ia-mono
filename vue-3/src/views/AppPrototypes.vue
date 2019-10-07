@@ -1,18 +1,12 @@
 <template>
  <div>
+    <h1>App Prototypes</h1>
     <div>
-      <h1>External API Test</h1>
+      <h2>API Prototypes</h2>
 
       <div v-if="apiMessage">
 
-        <!-- fix below: https://www.thetechieshouse.com/vue-js-pagination-example-with-bootstrap-server-side-pagination/ -->
-        <b-pagination
-            @input="getMessages(msgPage)"
-            v-model="msgPage"
-            :total-rows="msgTotal"
-            :per-page="msgPerPage"
-            aria-controls="my-table">
-        </b-pagination>
+        <h3>Pagination</h3>
 
         <p class="mt-3">Current Page: {{ msgPage }}</p>
 
@@ -22,6 +16,14 @@
             small>
         </b-table>
 
+        <b-pagination
+            @input="getMessages(msgPage)"
+            v-model="msgPage"
+            :total-rows="msgTotal"
+            :per-page="msgPerPage"
+            aria-controls="my-table">
+        </b-pagination>
+
         <div v-if="message">
            {{ message.value }}
         </div>
@@ -30,15 +32,16 @@
 
       <hr />
 
+
       <div>
-         <h2>Get test</h2>
-         <p>Ping an external API by clicking the button below. This will call the external API using an access token, and the API will validate it using
-           the API's audience value.
+         <h2>Get</h2>
+         <p>Ping the apps API by clicking the buttons below.<br />
            <button @click="getNoAuth">Get private list w/o required auth_access</button>
            <button @click="getMessages">Get private list required auth_access</button>
          </p>
         <h2>Result</h2>
         <p>{{ apiMessage }}</p>
+        <code>{{getResponse}}</code>
       </div>
 
     <hr />
@@ -49,6 +52,7 @@
        <button @click="postMessage">Post Message</button>
        <h2>Result</h2>
        <p>{{ apiMessage }}</p>
+       <code>{{postResponse}}</code>
     </div>
 
     <div v-if="message.uuid">
@@ -57,6 +61,8 @@
        <button @click="putMessage">Post Message</button>
        <h2>Result</h2>
        <p>{{ apiMessage }}</p>
+       <code>{{putResponse}}</code>
+       <p></p>
     </div>
 
  </div>
@@ -74,6 +80,7 @@ export default {
       msgPerPage: 2,
       msgItems: null,
       msgTotal: null,
+      response: null,
       message: {uuid:'', value:'test' + (new Date()).getTime()},
     };
   },
@@ -100,6 +107,7 @@ export default {
         this.apiMessage = 'Got 200 with data';
         this.msgItems = data.items;
         this.msgTotal = data.total
+        this.getResponse = data;
         console.log(data);
       } catch (e) {
         this.apiMessage = `Error: the server responded with '${ e.response.status }: ${e.response.statusText}'`; }
@@ -118,6 +126,7 @@ export default {
         });
         this.apiMessage = 'Got 200 with data';
         this.message =  data;
+        this.postResponse = data;
         console.log(data);
       } catch (e) {
         this.apiMessage = `Error: the server responded with '${ e.response.status }: ${e.response.statusText}'`; }
@@ -136,6 +145,7 @@ export default {
         });
         this.apiMessage = 'Got 200 with data';
         this.message =  data;
+        this.putResponse = data;
         console.log(data);
       } catch (e) {
         this.apiMessage = `Error: the server responded with '${ e.response.status }: ${e.response.statusText}'`; }
