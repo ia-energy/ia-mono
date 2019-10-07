@@ -36,9 +36,9 @@
            the API's audience value.
            <button @click="getNoAuth">Get private list w/o required auth_access</button>
            <button @click="getMessages">Get private list required auth_access</button>
-           <h2>Result</h2>
-           <p>{{ apiMessage }}</p>
          </p>
+        <h2>Result</h2>
+        <p>{{ apiMessage }}</p>
       </div>
 
     <hr />
@@ -88,7 +88,7 @@ export default {
         this.apiMessage = `Error: the server responded with '${ e.response.status }: ${e.response.statusText}'`; }
         this.messages = null;
     },
-    async getMessages(page) {
+    async getMessages() {
       const accessToken = await this.$auth.getAccessToken();
 
       try {
@@ -141,8 +141,8 @@ export default {
         this.apiMessage = `Error: the server responded with '${ e.response.status }: ${e.response.statusText}'`; }
     }
   },
-  mounted(msgPage){
-    this.getMessages(msgPage)
+  mounted(){
+    this.getMessages()
   }
 };
 </script>

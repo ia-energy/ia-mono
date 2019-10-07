@@ -4,12 +4,18 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Callback from './components/Callback';
 import Profile from "./views/Profile.vue";
+import Index from "./views/Index.vue";
 import ExternalApiView from "./views/ExternalApi.vue";
 import auth from "./auth/authService";
 
 Vue.use(Router);
 
 const routes = [
+  {
+    path: '/',
+    name: 'index',
+    component: Index
+  },
   {
     path: '/callback',
     name: 'callback',
