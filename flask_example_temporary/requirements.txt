@@ -1,6 +1,0 @@
-flask-bcrypt
-flask-restplus
-pyjwt
-Flask-Script
-flask_testing
-Flask-Migrate
