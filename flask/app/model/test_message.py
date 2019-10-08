@@ -12,4 +12,4 @@ class TestMessage(db.Model):
     updated = db.Column(db.DateTime, onupdate=func.now())
 
     def __repr__(self):
-        return "<TestMessage '{}'>".format(self.username)
+        return "<TestMessage '{}'>".format(self.uuid)

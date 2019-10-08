@@ -36,8 +36,9 @@
       <div>
          <h2>Get</h2>
          <p>Ping the apps API by clicking the buttons below.<br />
-           <button @click="getNoAuth">Get private list w/o required auth_access</button>
-           <button @click="getMessages">Get private list required auth_access</button>
+           <b-form-input v-model="uuid" placeholder="Enter uuid"></b-form-input>
+           <button @click="getNoAuth">Get message w/o auth_access</button>
+           <button @click="getMessage">Get message w/auth_access</button>
          </p>
         <h2>Result</h2>
         <p>{{ apiMessage }}</p>
@@ -80,20 +81,23 @@ export default {
       msgPerPage: 2,
       msgItems: null,
       msgTotal: null,
-      response: null,
+      getResponse: null,
+      postResponse: null,
+      puttResponse: null,
+      uuid: null,
       message: {uuid:'', value:'test' + (new Date()).getTime()},
     };
   },
   methods: {
     async getNoAuth() {
       try {
-        const { data } = await axios.get("/api/1/test_messages/", {});
+        const { data } = await axios.get("/api/1/test_messages/" + this.uuid , {
+        });
         this.apiMessage = 'Got 200 with data';
-        this.pageList = data;
+        this.getResponse = data;
         console.log(data);
       } catch (e) {
         this.apiMessage = `Error: the server responded with '${ e.response.status }: ${e.response.statusText}'`; }
-        this.messages = null;
     },
     async getMessages() {
       const accessToken = await this.$auth.getAccessToken();
@@ -106,7 +110,25 @@ export default {
         });
         this.apiMessage = 'Got 200 with data';
         this.msgItems = data.items;
-        this.msgTotal = data.total
+        this.msgTotal = data.total;
+        if (this.uuid == null)
+          if (data.items != undefined)
+            if (data.items[0] != undefined)
+              this.uuid = data.items[0].uuid;
+        console.log(data);
+      } catch (e) {
+        this.apiMessage = `Error: the server responded with '${ e.response.status }: ${e.response.statusText}'`; }
+    },
+    async getMessage() {
+      const accessToken = await this.$auth.getAccessToken();
+
+      try {
+        const { data } = await axios.get("/api/1/test_messages/" + this.uuid , {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        });
+        this.apiMessage = 'Got 200 with data';
         this.getResponse = data;
         console.log(data);
       } catch (e) {
