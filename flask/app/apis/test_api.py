@@ -47,8 +47,7 @@ class TestMessage(Resource):
     @api.marshal_with(test_msg)
     @requires_auth
     def get(self, uuid):
-        if not uuid:
-           return db_srvc.get_messages(page=request.args.get('page', 1), per_page=request.args.get('perPage', 20))
+        return db_srvc.get_a_message(uuid)
 
     @api.doc('put_test')
     @api.marshal_with(test_msg)
