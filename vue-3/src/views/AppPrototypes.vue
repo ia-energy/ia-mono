@@ -6,9 +6,11 @@
     </div>
 
     <div v-if="pagi.apiMessage" class="row">
+
       <div class="col">
         <h3>API Pagination</h3>
       </div>
+
       <div class="col-10">
         <p class="mt-3">Current Page: {{ pagi.msgPage }}</p>
 
@@ -29,13 +31,17 @@
         <div v-if="message">
            {{ message.value }}
         </div>
+
       </div>
+
     </div>
 
     <div class="row">
+
       <div class="col">
          <h2>API Get</h2>
       </div>
+
       <div class="col-10">
          <p>Ping the apps API by clicking the buttons below.<br />
            <b-form-input v-model="get.uuid" placeholder="Enter uuid"></b-form-input>
@@ -45,13 +51,15 @@
         <p>{{ get.apiMessage }}</p>
         <code>{{ get.data }}</code>
       </div>
+
     </div>
 
-
     <div class="row">
+
       <div class="col">
        <h2>API Post test </h2>
      </div>
+
      <div class="col-10">
        <b-form-input v-model="message.value" placeholder="Enter test value">
        </b-form-input>
@@ -59,12 +67,15 @@
        <p>{{ post.apiMessage }}</p>
        <code>{{ post.data }}</code>
      </div>
+
     </div>
 
     <div v-if="message.uuid" class="row">
+
       <div class="col">
        <h2>API Put test </h2>
      </div>
+
      <div class="col-10">
        <b-form-input v-model="message.value" placeholder="Enter test value">
        </b-form-input>
@@ -73,10 +84,11 @@
        <code>{{ put.data }}</code>
        <p></p>
      </div>
+
     </div>
 
-
 </div>
+
 </template>
 
 <script>
