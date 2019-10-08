@@ -5,24 +5,24 @@
       <h1>App Prototypes</h1>
     </div>
 
-    <div v-if="apiMessage" class="row">
+    <div v-if="pagi.apiMessage" class="row">
       <div class="col">
         <h3>API Pagination</h3>
       </div>
       <div class="col-10">
-        <p class="mt-3">Current Page: {{ msgPage }}</p>
+        <p class="mt-3">Current Page: {{ pagi.msgPage }}</p>
 
         <b-table
             id="my-table"
-            :items="msgItems"
+            :items="pagi.msgItems"
             small>
         </b-table>
 
         <b-pagination
-            @input="getMessages(msgPage)"
-            v-model="msgPage"
-            :total-rows="msgTotal"
-            :per-page="msgPerPage"
+            @input="getMessages(pagi.msgPage)"
+            v-model="pagi.msgPage"
+            :total-rows="pagi.msgTotal"
+            :per-page="pagi.msgPerPage"
             aria-controls="my-table">
         </b-pagination>
 
@@ -38,13 +38,12 @@
       </div>
       <div class="col-10">
          <p>Ping the apps API by clicking the buttons below.<br />
-           <b-form-input v-model="uuid" placeholder="Enter uuid"></b-form-input>
+           <b-form-input v-model="get.uuid" placeholder="Enter uuid"></b-form-input>
            <button @click="getNoAuth">Get message w/o auth_access</button>
            <button @click="getMessage">Get message w/auth_access</button>
          </p>
-        <h2>Result</h2>
-        <p>{{ apiMessage }}</p>
-        <code>{{getResponse}}</code>
+        <p>{{ get.apiMessage }}</p>
+        <code>{{ get.data }}</code>
       </div>
     </div>
 
@@ -57,9 +56,8 @@
        <b-form-input v-model="message.value" placeholder="Enter test value">
        </b-form-input>
        <button @click="postMessage">Post Message</button>
-       <h2>Result</h2>
-       <p>{{ apiMessage }}</p>
-       <code>{{postResponse}}</code>
+       <p>{{ post.apiMessage }}</p>
+       <code>{{ post.data }}</code>
      </div>
     </div>
 
@@ -71,14 +69,13 @@
        <b-form-input v-model="message.value" placeholder="Enter test value">
        </b-form-input>
        <button @click="putMessage">Post Message</button>
-       <h2>Result</h2>
-       <p>{{ apiMessage }}</p>
-       <code>{{putResponse}}</code>
+       <p>{{ put.apiMessage }}</p>
+       <code>{{ put.data }}</code>
        <p></p>
      </div>
     </div>
 
- 
+
 </div>
 </template>
 
@@ -89,15 +86,27 @@ export default {
   name: "Api",
   data() {
     return {
-      apiMessage: null,
-      msgPage: 1,
-      msgPerPage: 2,
-      msgItems: null,
-      msgTotal: null,
-      getResponse: null,
-      postResponse: null,
-      puttResponse: null,
-      uuid: null,
+
+      pagi: {
+        msgPage: 1,
+        msgPerPage: 2,
+        msgItems: null,
+        msgTotal: null,
+        apiMessage: null,
+      },
+      get: {
+         data: null,
+         apiMessage: null,
+         uuid: null,
+      },
+      post: {
+         data: null,
+         apiMessage: null
+      },
+      put: {
+         data: null,
+         apiMessage: null
+      },
       message: {uuid:'', value:'test' + (new Date()).getTime()},
     };
   },
@@ -106,46 +115,49 @@ export default {
       try {
         const { data } = await axios.get("/api/1/test_messages/" + this.uuid , {
         });
-        this.apiMessage = 'Got 200 with data';
-        this.getResponse = data;
+        this.get.apiMessage = 'Got 200 with data';
+        this.get.data = data;
         console.log(data);
       } catch (e) {
-        this.apiMessage = `Error: the server responded with '${ e.response.status }: ${e.response.statusText}'`; }
+        this.get.apiMessage = `Error: the server responded with '${ e.response.status }: ${e.response.statusText}'`;
+        this.get.data = null;
+      }
     },
     async getMessages() {
       const accessToken = await this.$auth.getAccessToken();
 
       try {
-        const { data } = await axios.get("/api/1/test_messages/?perPage=" + this.msgPerPage + "&page=" + this.msgPage, {
+        const { data } = await axios.get("/api/1/test_messages/?perPage=" + this.pagi.msgPerPage + "&page=" + this.pagi.msgPage, {
           headers: {
             Authorization: `Bearer ${accessToken}`
           }
         });
-        this.apiMessage = 'Got 200 with data';
-        this.msgItems = data.items;
-        this.msgTotal = data.total;
+        this.pagi.apiMessage = 'Got 200 with data';
+        this.pagi.msgItems = data.items;
+        this.pagi.msgTotal = data.total;
         if (this.uuid == null)
           if (data.items != undefined)
             if (data.items[0] != undefined)
-              this.uuid = data.items[0].uuid;
+              this.get.uuid = data.items[0].uuid;
         console.log(data);
       } catch (e) {
-        this.apiMessage = `Error: the server responded with '${ e.response.status }: ${e.response.statusText}'`; }
+        this.pagi.apiMessage = `Error: the server responded with '${ e.response.status }: ${e.response.statusText}'`; }
     },
     async getMessage() {
       const accessToken = await this.$auth.getAccessToken();
 
       try {
-        const { data } = await axios.get("/api/1/test_messages/" + this.uuid , {
+        const { data } = await axios.get("/api/1/test_messages/" + this.get.uuid , {
           headers: {
             Authorization: `Bearer ${accessToken}`
           }
         });
-        this.apiMessage = 'Got 200 with data';
-        this.getResponse = data;
-        console.log(data);
+        this.get.apiMessage = 'Got 200 with data';
+        this.get.data = data;
       } catch (e) {
-        this.apiMessage = `Error: the server responded with '${ e.response.status }: ${e.response.statusText}'`; }
+        this.get.apiMessage = `Error: the server responded with '${ e.response.status }: ${e.response.statusText}'`;
+        this.get.data = null;
+      }
     },
     async postMessage() {
       const accessToken = await this.$auth.getAccessToken();
@@ -159,12 +171,14 @@ export default {
             Authorization: `Bearer ${accessToken}`
           }
         });
-        this.apiMessage = 'Got 200 with data';
+        this.post.apiMessage = 'Got 200 with data';
         this.message =  data;
-        this.postResponse = data;
+        this.post.data = data;
         console.log(data);
       } catch (e) {
-        this.apiMessage = `Error: the server responded with '${ e.response.status }: ${e.response.statusText}'`; }
+        this.post.apiMessage = `Error: the server responded with '${ e.response.status }: ${e.response.statusText}'`;
+        this.post.data = null;
+      }
     },
     async putMessage() {
       const accessToken = await this.$auth.getAccessToken();
@@ -178,12 +192,14 @@ export default {
             Authorization: `Bearer ${accessToken}`
           }
         });
-        this.apiMessage = 'Got 200 with data';
+        this.put.apiMessage = 'Got 200 with data';
         this.message =  data;
-        this.putResponse = data;
+        this.put.data = data;
         console.log(data);
       } catch (e) {
-        this.apiMessage = `Error: the server responded with '${ e.response.status }: ${e.response.statusText}'`; }
+        this.put.apiMessage = `Error: the server responded with '${ e.response.status }: ${e.response.statusText}'`;
+        this.put.data = null;
+      }
     }
   },
   mounted(){
