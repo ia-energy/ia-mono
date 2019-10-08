@@ -1,13 +1,15 @@
 <template>
- <div>
-    <h1>App Prototypes</h1>
-    <div>
-      <h2>API Prototypes</h2>
+  <div  class="container">
 
-      <div v-if="apiMessage">
+    <div class="row">
+      <h1>App Prototypes</h1>
+    </div>
 
-        <h3>Pagination</h3>
-
+    <div v-if="apiMessage" class="row">
+      <div class="col">
+        <h3>API Pagination</h3>
+      </div>
+      <div class="col-10">
         <p class="mt-3">Current Page: {{ msgPage }}</p>
 
         <b-table
@@ -28,13 +30,13 @@
            {{ message.value }}
         </div>
       </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+         <h2>API Get</h2>
       </div>
-
-      <hr />
-
-
-      <div>
-         <h2>Get</h2>
+      <div class="col-10">
          <p>Ping the apps API by clicking the buttons below.<br />
            <b-form-input v-model="uuid" placeholder="Enter uuid"></b-form-input>
            <button @click="getNoAuth">Get message w/o auth_access</button>
@@ -44,29 +46,40 @@
         <p>{{ apiMessage }}</p>
         <code>{{getResponse}}</code>
       </div>
+    </div>
 
-    <hr />
 
-    <div>
-       <h2> Post test </h2>
-       <b-form-input v-model="message.value" placeholder="Enter test value"></b-form-input>
+    <div class="row">
+      <div class="col">
+       <h2>API Post test </h2>
+     </div>
+     <div class="col-10">
+       <b-form-input v-model="message.value" placeholder="Enter test value">
+       </b-form-input>
        <button @click="postMessage">Post Message</button>
        <h2>Result</h2>
        <p>{{ apiMessage }}</p>
        <code>{{postResponse}}</code>
+     </div>
     </div>
 
-    <div v-if="message.uuid">
-       <h2>Put test </h2>
-       <b-form-input v-model="message.value" placeholder="Enter test value"></b-form-input>
+    <div v-if="message.uuid" class="row">
+      <div class="col">
+       <h2>API Put test </h2>
+     </div>
+     <div class="col-10">
+       <b-form-input v-model="message.value" placeholder="Enter test value">
+       </b-form-input>
        <button @click="putMessage">Post Message</button>
        <h2>Result</h2>
        <p>{{ apiMessage }}</p>
        <code>{{putResponse}}</code>
        <p></p>
+     </div>
     </div>
 
- </div>
+ 
+</div>
 </template>
 
 <script>
