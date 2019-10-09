@@ -15,9 +15,9 @@ blueprint = Blueprint('api', __name__, url_prefix='/api/1')
 
 api = Api(
     blueprint,
-    title='My Title',
+    title='IA API',
     version='1.0',
-    description='A description',
+    description='RESTFUL API for IA webclient',
     security='Bearer Auth', authorizations=authorizations,
     # All API metadatas
 )
