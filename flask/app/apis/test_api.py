@@ -6,12 +6,13 @@ api = Namespace('test_messages', description='test api')
 
 @api.errorhandler(AuthError)
 def handle_auth_error(ex):
-   response = jsonify(ex.error)
-   response.status_code = ex.status_code
-   return ex.error, ex.status_code
+    response = jsonify(ex.error)
+    response.status_code = ex.status_code
+    return ex.error, ex.status_code
 
 test_msg = api.model('TestMessage', {
-    'uuid': fields.String(required=False, description='Test message identifier'),
+    'uuid': fields.String(required=False, description='Test message identifier'
+        ),
     'value': fields.String(required=True, description='Message'),
     'created': fields.String(required=False, description='created timestamp'),
     'updated': fields.String(required=False, description='updated timestamp'),
@@ -27,11 +28,13 @@ test_msg_pag = api.model('TestMessagePag', {
 
 @api.route('/')
 class TestMessages(Resource):
-    @api.doc('get_test_list', params={'page': 'start at x page (1 indexed)', 'perPage': 'how many to return in page'})
+    @api.doc('get_test_list', params={'page': 'start at x page (1 indexed)',
+        'perPage': 'how many to return in page'})
     @api.marshal_list_with(test_msg_pag)
     @requires_auth
     def get(self):
-        return db_srvc.get_messages(page=int(request.args.get('page', 1)), per_page=int(request.args.get('perPage', 20)))
+        return db_srvc.get_messages(page=int(request.args.get('page', 1)),
+            per_page=int(request.args.get('perPage', 20)))
 
     @api.doc('post_test')
     @api.marshal_with(test_msg)
