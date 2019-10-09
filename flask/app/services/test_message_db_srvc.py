@@ -37,7 +37,6 @@ def get_messages(page,per_page):
     }, 200
 
 def get_a_message(uuid):
-    print(TestMessage.query.filter_by(uuid=uuid).first())
     return TestMessage.query.filter_by(uuid=uuid).first()
 
 def add(data):
