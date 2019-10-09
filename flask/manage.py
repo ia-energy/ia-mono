@@ -27,6 +27,7 @@ migrate = Migrate(app, db)
 manager.add_command('db', MigrateCommand)
 
 @app.route("/")
+@app.route("/api")
 def index():
     return redirect('/api/1/')
 
