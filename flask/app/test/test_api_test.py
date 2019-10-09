@@ -16,7 +16,6 @@ class GetTest(unittest.TestCase):
             test_mgs_api.get("test_uuid")
         self.assertTrue("({'code': 'invalid_header', 'description': 'Unable to find appropriate key'}, 401)" in str(context.exception))
 
-
     test_message = TestMessage()
     test_message.id = "private_db_id"
     test_message.uuid = "test_uuid"
@@ -29,8 +28,6 @@ class GetTest(unittest.TestCase):
         #validAuth.return_value = False
         test_mgs_api = TestMgsAPI()
         self.assertFalse("private_db_id" in str(test_mgs_api.get("uuid")))
-
-
 
 if __name__ == '__main__':
         unittest.main()

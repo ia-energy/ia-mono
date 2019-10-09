@@ -1,6 +1,6 @@
 import unittest
 
-from flask import Flask
+from flask import Flask, redirect
 from flask_cors import CORS
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
@@ -25,6 +25,10 @@ db.init_app(app)
 from app.model.test_message import TestMessage
 migrate = Migrate(app, db)
 manager.add_command('db', MigrateCommand)
+
+@app.route("/")
+def index():
+    return redirect('/api/1/')
 
 @manager.command
 def run():
