@@ -72,30 +72,42 @@
 
     <div v-if="message.uuid" class="row">
 
-      <div class="col">
-       <h2>API Put test </h2>
-     </div>
+       <div class="col">
+          <h2>API Put test </h2>
+       </div>
 
-     <div class="col-10">
-       <b-form-input v-model="message.value" placeholder="Enter test value">
-       </b-form-input>
-       <button @click="putMessage">Post Message</button>
-       <p>{{ put.apiMessage }}</p>
-       <code>{{ put.data }}</code>
-       <p></p>
-     </div>
-
+       <div class="col-10">
+          <b-form-input v-model="message.value" placeholder="Enter test value">
+          </b-form-input>
+          <button @click="putMessage">Post Message</button>
+          <p>{{ put.apiMessage }}</p>
+          <code>{{ put.data }}</code>
+          <p></p>
+       </div>
     </div>
 
+    <div class="row">
+      <div class="col">
+         <h2>Sample Chart</h2>
+      </div>
+      <div class="col-10">
+         <PackChart :tweetData='sampleTweetData' />
+      </div>
+    </div>
 </div>
 
 </template>
 
 <script>
 import axios from 'axios';
+import * as d3 from "d3";
+import PackChart from "../components/SampleChart.vue";
 
 export default {
   name: "Api",
+  components: {
+    PackChart
+  },
   data() {
     return {
 
@@ -120,6 +132,7 @@ export default {
          apiMessage: null
       },
       message: {uuid:'', value:'test' + (new Date()).getTime()},
+      sampleTweetData: [],
     };
   },
   methods: {
@@ -212,10 +225,15 @@ export default {
         this.put.apiMessage = `Error: the server responded with '${ e.response.status }: ${e.response.statusText}'`;
         this.put.data = null;
       }
+    },
+    async fetchSampleTweets() {
+      let data = await d3.json("./tweets_sample.json");
+      this.sampleTweetData = data;
     }
   },
   mounted(){
-    this.getMessages()
+    this.getMessages();
+    this.fetchSampleTweets();
   }
 };
 </script>
