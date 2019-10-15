@@ -15,6 +15,7 @@ def handle_auth_error(ex):
 class PDF(Resource):
     @api.doc('get_test')
     @api.produces(["application/pdf"])
+    @requires_auth
     def get(self, name):
         if not name.endswith(".pdf"):
             raise Execption("Request not for PDF")
