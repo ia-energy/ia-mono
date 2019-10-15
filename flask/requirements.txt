@@ -11,5 +11,6 @@ flask-restplus==0.12.1
 pyjwt
 Flask-Script
 flask_testing
-Flask-Migrate
 psycopg2-binary==2.8.3
+boto3==1.9.249
+Flask-Migrate

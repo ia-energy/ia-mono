@@ -94,6 +94,17 @@
          <PackChart :tweetData='sampleTweetData' />
       </div>
     </div>
+
+    <div class="row">
+      <div class="col">
+         <h2>Download PDF from S3</h2>
+      </div>
+      <div class="col-10">
+         <a href="/api/1/test_pdf/test">download</a>
+      </div>
+    </div>
+
+
 </div>
 
 </template>
