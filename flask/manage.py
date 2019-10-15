@@ -7,10 +7,12 @@ from flask_script import Manager
 
 from app import db
 from app.config import ia_config as config
-from app.apis import api
-from app.apis import blueprint as api1
+from app.apis import blueprint1 as api1
+
+
 
 app = Flask(__name__)
+
 # https://tech.zegami.com/cant-set-authorization-header-for-flask-cors-request-bd88be04fc7c
 CORS(app, expose_headers='Authorization')
 app.register_blueprint(api1)

@@ -6,7 +6,11 @@
       "algorithms": "RS256"
    },
    "app": {
-      "sqlAlchemyDatabaseUri":"postgresql://ia:change_for_prod@ia-postgres/ia",
-      "debug":true
+      "sqlAlchemyDatabaseUri": "postgresql://ia:change_for_prod@ia-postgres/ia",
+      "debug": true
+   },
+   "boto3": {
+     "aws_access_key_id": "example_access_key_id",
+     "aws_secret_access_key": "example_secret_access_key"
    }
 }

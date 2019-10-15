@@ -94,6 +94,17 @@
          <PackChart :tweetData='sampleTweetData' />
       </div>
     </div>
+
+    <div class="row">
+      <div class="col">
+         <h2>Download PDF from S3</h2>
+      </div>
+      <div class="col-10">
+         <b-link @click="getPDF">download</b-link>
+      </div>
+    </div>
+
+
 </div>
 
 </template>
@@ -179,6 +190,28 @@ export default {
         });
         this.get.apiMessage = 'Got 200 with data';
         this.get.data = data;
+      } catch (e) {
+        this.get.apiMessage = `Error: the server responded with '${ e.response.status }: ${e.response.statusText}'`;
+        this.get.data = null;
+      }
+    },
+    async getPDF() {
+      const accessToken = await this.$auth.getAccessToken();
+
+      try {
+        const { data } = await axios.get('/api/1/test_pdf/test.pdf' ,
+        {
+          responseType: 'arraybuffer',
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        });
+        this.get.apiMessage = 'Got 200 with data';
+        let blob = new Blob([data], { type: 'application/pdf' })
+        let link = document.createElement('a')
+        link.href = window.URL.createObjectURL(blob)
+        link.download = 'test.pdf'
+        link.click()
       } catch (e) {
         this.get.apiMessage = `Error: the server responded with '${ e.response.status }: ${e.response.statusText}'`;
         this.get.data = null;
