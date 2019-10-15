@@ -11,10 +11,10 @@ def handle_auth_error(ex):
     response.status_code = ex.status_code
     return ex.error, ex.status_code
 
-
 @api.route('/<name>')
 class PDF(Resource):
     @api.doc('get_test')
+    @api.produces(["application/pdf"])
     def get(self, name):
         if not name.endswith(".pdf"):
             raise Execption("Request not for PDF")
